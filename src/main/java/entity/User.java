@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 
 @Component
-@Entity(name = "springUsers")
+@Entity(name = "employees")
 public class User {
     @Id
     @GeneratedValue
@@ -17,6 +17,9 @@ public class User {
     private String name;
     private String login;
     private String password;
+
+    public User() {
+    }
 
     public String getName() {
         return name;

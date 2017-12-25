@@ -1,6 +1,6 @@
 package controller;
 
-import controller.dao.UserDAO;
+import dao.UserDAO;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class RegistrationController {
     @Autowired
     HttpSession session;
     @Autowired
-    FormValidator formValidator;
+    FormValidatorUser formValidator;
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -56,12 +56,53 @@ public class RegistrationController {
         return mod;
     }
 
+    @RequestMapping(value = "/userlogin", method = RequestMethod.POST)
+    public ModelAndView doLogin(
+            //@ModelAttribute : it is the same modelAttribute as in jsp (registration.jsp)
+            // data from the form should be moved to User u directly
+            // so names of inputs should be the same as fields in User class
+            @ModelAttribute("registeredUser")
+            // to be validated by Validator
+            @Validated
+                    User u
+            // results of form validation
+            , BindingResult result) {
+        ModelAndView mod = new ModelAndView();
+        u.setName(u.getLogin()); // in order to pass validation
+        if (result.hasErrors()) {
+            mod.setViewName("login");
+        } else {
+            User user = (User) session.getAttribute("registeredUser");
+            String login = user.getLogin();
+            String password = user.getPassword();
+            userDao.getUserByLoginAndPassword(login, password);
+//            status.setComplete(); //обнуление сессии (delete and recreate new)
+            // we have to clear data after registrations and provide new one to login
+            mod.setViewName("menu");
+        }
+        return mod;
+    }
+
+    @RequestMapping(value = "/confirmationlogin", method = RequestMethod.GET)
+    public String getConfirmationLogin(SessionStatus status) {
+        //userDao.create((User) session.getAttribute("registeredUser"));
+        User user = (User) session.getAttribute("registeredUser");
+        String login = user.getLogin();
+        String password = user.getPassword();
+        userDao.getUserByLoginAndPassword(login, password);
+        status.setComplete(); //обнуление сессии (delete and recreate new)
+        // we have to clear data after registrations and provide new one to login
+        return "menu";
+    }
+
+
     @RequestMapping(value = "/confirmation", method = RequestMethod.GET)
     public String getConfirmation(SessionStatus status) {
         userDao.create((User) session.getAttribute("registeredUser"));
         status.setComplete(); //обнуление сессии (delete and recreate new)
         // we have to clear data after registrations and provide new one to login
-        return "login";
+        //return "login";
+        return "menu";
     }
 
     @InitBinder
@@ -71,7 +112,9 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLogin(SessionStatus status) {
+    public String getLoginForm(Model model) {
+        User user = new User();
+        model.addAttribute("registeredUser", user);
         return "login";
     }
 

@@ -1,4 +1,4 @@
-package controller.dao;
+package dao;
 
 import entity.User;
 import org.hibernate.SessionFactory;

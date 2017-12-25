@@ -19,18 +19,33 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>RegistrationController</servlet-name>
         <url-pattern>/registration</url-pattern>
         <url-pattern>/userregistration</url-pattern>
+        <url-pattern>/userlogin</url-pattern>
         <url-pattern>/confirmation</url-pattern>
         <url-pattern>/login</url-pattern>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/order</url-pattern>
+        <url-pattern>/makeOrder</url-pattern>
+        <url-pattern>/allorders</url-pattern>
+    </servlet-mapping>
+
+
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

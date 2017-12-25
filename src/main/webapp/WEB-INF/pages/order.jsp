@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <title>Login jsp</title>
+    <title>Order jsp</title>
     <style>
         .error{
             color:#ff0000;
@@ -14,26 +14,32 @@
 </head>
 <body>
 <%--it is a link to RegistrationController method doRegistration()--%>
-<c:set var="urladdr" value="userlogin"/>
+<c:set var="urladdr" value="makeorder"/>
 <%--Spring form--%>
 <%-- modelAttribute values is important --%>
-<sf:form modelAttribute="registeredUser" action="${urladdr}">
+<sf:form modelAttribute="order" action="${urladdr}">
     <%--spring label--%>
-   <label for="login">
-        <s:message code="property.enterYourLogin"/>
+    <label for="region">
+        <s:message code="property.enterRegion"/>
     </label>
-    <sf:input path="login"/>
-    <sf:errors path="login" cssClass="error"/>
+    <sf:input path="region"/>
+    <sf:errors path="region" cssClass="error"/>
     <br>
-    <label for="password">
-        <s:message code="property.enterYourPassword"/>
+    <label for="dateOrder">
+        <s:message code="property.enterDateOrder"/>
     </label>
-    <sf:input path="password"/>
-    <sf:errors path="password" cssClass="error"/>
+    <sf:input path="dateOrder"/>
+    <sf:errors path="dateOrder" cssClass="error"/>
+    <br>
+    <label for="sumOrder">
+        <s:message code="property.enterSumOrder"/>
+    </label>
+    <sf:input path="sumOrder"/>
+    <sf:errors path="sumOrder" cssClass="error"/>
     <br>
     <%--not spring button--%>
     <button type="submit" name="Send">
-        <s:message code="property.sendToLogin"/>
+        <s:message code="property.makeOrder"/>
     </button>
 
 </sf:form>

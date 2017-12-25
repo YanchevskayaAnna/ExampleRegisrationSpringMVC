@@ -1,12 +1,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="dao"/>
 
     <!--it is link to properties file propertyFile.properties -->
     <bean id="messageSource"
@@ -14,6 +16,23 @@
         <property name="basename" value="propertyFile" />
     </bean>
 
+    <bean id="Ukraine" class="entity.Country"
+          p:name = "Ukraine"/>
+
+    <bean id="USA" class="entity.Country"
+          p:name = "Unated State of America"/>
+
+    <bean id="Kiev" class="entity.Region"
+          p:name = "Kiev"
+          p:country-ref = "Ukraine"/>
+
+    <bean id="Dnepr" class="entity.Region"
+          p:name = "Dnepropetrovsk"
+          p:country-ref = "Ukraine"/>
+
+    <bean id="California" class="entity.Region"
+          p:name = "California"
+          p:country-ref = "USA"/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
